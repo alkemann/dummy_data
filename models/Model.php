@@ -3,6 +3,7 @@
 namespace dummy_data\models;
 
 use \lithium\data\entity\Document;
+use \dummy_data\models\Type;
 
 class Model extends \lithium\data\Model {
 
@@ -31,7 +32,7 @@ class Model extends \lithium\data\Model {
 	}
 
 	public static function inspectField($fieldname, $fieldvalue = null) {
-		return 'name';
+		return Type::matchName($fieldname);
 	}
 }
 ?>

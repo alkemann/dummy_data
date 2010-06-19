@@ -3,25 +3,26 @@
 namespace dummy_data\tests\functional;
 
 use \dummy_data\tests\mocks\models\MockModel;
-use \dummy_data\tests\mocks\models\MockPost;
 
 class InspectTest extends \lithium\test\Unit {
 
 	public function testInspect() {
-		
-		#$apost = MockPost::first()->data();
-		#dt($apost->data());
-		
 		$model = MockModel::create(array(
 			'\dummy_data\tests\mocks\models\MockPost'
 		));
 		
 		$result = $model->data();
-		dt($result);
-
-	#	$result = $model->generate(1);
-	#	dt($result);
-
-
+		$expected = array(
+			'title' => 'English->title',
+			'author' => array(
+				'name' => 'Name->name',
+				'username' => 'Web->username',
+				'email' => 'Web->email',
+			),
+			'created' => 'Time->datetime',
+			'body' => 'Lorem->sentence'
+		);
+		$this->assertEqual($result, $expected);
 	}
 }
+?>

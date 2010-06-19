@@ -1,4 +1,9 @@
 <?php
+
+namespace dummy_data\models;
+
+use \php_faker\DummyWrapper;
+use \dummy_data\models\Model;
 /**
  * This class as the function of guessing what generator a field should use 
  * and also is used to list out all generators for each field typpe.
@@ -22,16 +27,13 @@
  * );
  * ?>
  * 
- * @package DummyData plugin
  * @author Ronny Vindenes (rvv)
  * @author AlexandeR Morland (alkemann)
- * @modified 10. feb. 2009
+ * @modified 20 june 2010
  */
-class DummyType extends DummyAppModel {
-	public $name = 'DummyType';
-	public $useTable = false;
+class Type extends \lithium\core\StaticObject {
 	
-	private $_nameMatch = array(
+	private static $_nameMatch = array(
 		'username' => 'Web->username', 
 		'password' => 'Web->password', 
 		'name' => 'Name->name', 
@@ -60,7 +62,9 @@ class DummyType extends DummyAppModel {
 		'extension' => 'English->extension', 
 		'description' => 'English->quote', 
 		'signature' => 'English->quote',
-		'address' => 'Address->street_address'			
+		'address' => 'Address->street_address',
+		'created' => 'Time->datetime',
+		'body' => 'Lorem->sentence'
 	);
 	
 	private $_typeMatch = array(
@@ -86,11 +90,12 @@ class DummyType extends DummyAppModel {
 		),
 		'Web->email' => array(
 			'field' => 'all',
+
 			'fields' => array('firstname','surname','lastname')
 		)
 	);
-	
-	function __construct($id = false,$table = null, $ds = null) {
+	/*
+	public function __construct($id = false,$table = null, $ds = null) {
 		parent::__construct($id,$table,$ds);	
 		$loaded = Configure::load('dummy_config');
 		$name_matches = Configure::read('Dummy.name_matches');
@@ -102,9 +107,8 @@ class DummyType extends DummyAppModel {
 			$this->_typeMatch = am($this->_nameMatch,$type_matches);
 		}
 	}
-	
+	 */
 	public function options() {
-		App::import('vendor','Dummy.DummyWrapper');
 		$numbers = DummyWrapper::listNumberGenerators();
 		$strings = DummyWrapper::listStringGenerators();
 		$times = DummyWrapper::listTimeGenerators();
@@ -124,9 +128,9 @@ class DummyType extends DummyAppModel {
 		return $ret;
 	}
 	
-	private function _matchName($fieldName) {
-		if (isset($this->_nameMatch[$fieldName])) {
-			return $this->_nameMatch[$fieldName];
+	public static function matchName($fieldName) {
+		if (isset(static::$_nameMatch[$fieldName])) {
+			return static::$_nameMatch[$fieldName];
 		}
 		return null;
 	}
@@ -144,12 +148,12 @@ class DummyType extends DummyAppModel {
 		if (preg_match('/unsigned$/', $field['type']) == 1) {
 			$type['custom_variable'] = 'unsigned';
 		}
-		
+	/*	
 		if (preg_match('/_id$/', $field['name']) == 1) {
 			if ($field['name']=='parent_id') {
-				$Dummytable = ClassRegistry::init('Dummy.DummyTable','model');
-				$Dummytable->read(null,$field['dummy_table_id']);
-				$model = $Dummytable->data['DummyTable']['name'];
+				$DummyModel = new Model();
+				$DummyModel->read(null,$field['dummy_table_id']);
+				$model = $DummyModel->data['DummyTable']['name'];
 			} else {
 				$model = substr($field['name'], 0, strlen($field['name']) - 3);
 			}
@@ -157,7 +161,7 @@ class DummyType extends DummyAppModel {
 			$type['generator'] = 'BelongsTo';
 			$type['custom_variable'] = Inflector::camelize($model);
 		}
-		
+	 */	
 		if ($field['type'] == 'float') {
 			$type['custom_variable'] = '%01.2f';
 		}
