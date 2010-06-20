@@ -15,6 +15,14 @@ class Model extends \lithium\data\Model {
 	);
 
 	public static function create(array $data = array(), array $options = array()) {
+		if (empty($data)) return null;
+		if (sizeof($data) > 1) {
+			$ret = array();
+			foreach ($data as $model) {
+				$ret[] = static::create(array($model), $options);
+			}
+			return $ret;
+		}
 	 	$model = $data[0];
 		if (!class_exists($model)) return null;
 		$data = static::inspect(null, $model::first()->data());

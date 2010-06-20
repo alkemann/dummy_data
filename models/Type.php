@@ -2,7 +2,6 @@
 
 namespace dummy_data\models;
 
-use \php_faker\DummyWrapper;
 use \dummy_data\models\Model;
 /**
  * This class as the function of guessing what generator a field should use 
@@ -31,7 +30,7 @@ use \dummy_data\models\Model;
  * @author AlexandeR Morland (alkemann)
  * @modified 20 june 2010
  */
-class Type extends \lithium\core\StaticObject {
+class Type {
 	
 	private static $_nameMatch = array(
 		'username' => 'Web->username', 
