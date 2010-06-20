@@ -9,7 +9,7 @@
  */
 namespace dummy_data\models\lib;
 
-class Time extends \dummy_data\Data {
+class Time extends \dummy_data\models\Data {
 	
 
 	public static function date($options = array()) {

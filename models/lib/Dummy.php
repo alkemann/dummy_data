@@ -1,8 +1,8 @@
 <?php
 
-namespace php_faker\lib;
+namespace dummy_data\models\lib;
 
-class DummyData {
+class Dummy {
 	
 	public static function get_cities() {
 		$cities = array(

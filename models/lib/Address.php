@@ -19,30 +19,30 @@ class Address extends \dummy_data\Data {
 		'Squares','Squares','Station','Station','Stravenue','Stravenue','Stream','Stream','Street','Street','Streets','Summit','Summit','Terrace','Throughway','Trace','Track','Trafficway','Trail','Trail','Tunnel','Tunnel','Turnpike','Turnpike','Underpass','Union','Unions','Valley','Valleys','Via','Viaduct','View','Views','Village','Village','Villages','Ville','Vista','Vista','Walk','Walks','Wall','Way','Ways','Well','Wells');
 	private static $_street_name_formats = array('first_name','surname');
 	
-	public function __construct() {}
+	public static function __construct() {}
 	
 	
-	public function phone($options = array()) {
+	public static function phone($options = array()) {
 		$syntax = isset($options['variable']) ? $options['variable'] : '(47) Xx xx xx xx';
 		return self::generate_random_num_str($syntax);
 	}
 		
-	public function street_suffix() {		
+	public static function street_suffix() {		
 		return parent::random( self::$_street_suffix );
 	}
 	
-	public function street_name() {
+	public static function street_name() {
 		$method = parent::random( self::$_street_name_formats );
 		$result[] = parent::__get('Name')->$method;
 		$result[] = self::street_suffix();
 		return implode($result, " ");
 	}
 	
-	public function street_address() {
+	public static function street_address() {
 		return parent::generate_random_alphanumeric_str( implode( " ", array( 'xxxxx' , self::street_name() ) ) );
 	}
 	
-	public function abode_address( $include_street=false ) {
+	public static function abode_address( $include_street=false ) {
 		if ( $include_street ) {
 			$str[] = 'xxxxx';
 		}
@@ -57,11 +57,11 @@ class Address extends \dummy_data\Data {
 		return parent::generate_random_alphanumeric_str( implode( " ", $str ) );
 	}
 	
-	public function post_code($options = array()) {
-		return self::zip_code($options);
+	public static function post_code($options = array()) {
+		return static::zip_code($options);
 	}
 	
-	public function zip_code($options = array()) {
+	public static function zip_code($options = array()) {
 		if (isset($options['variable'])) {
 			$a = $options['variable'];
 		} else {

@@ -9,28 +9,30 @@
 
 namespace dummy_data\models\lib;
 
-class English extends \dummy_data\Data {
+use \dummy_data\models\lib\Dummy;
+
+class English extends \dummy_data\models\Data {
 		
 	public function __construct() {
 	}
 	
 	public static function city($options = array()) {
-		$cities = &DummyData::get_cities();
+		$cities = &Dummy::get_cities();
 		return $cities[rand(0, count($cities) - 1)];
 	}
 	
 	public static function color($options = array()) {
-		$colors = &DummyData::get_colors();
+		$colors = &Dummy::get_colors();
 		return $colors[rand(0, count($colors) - 1)];
 	}
 	public static function title($options = array()) {
 		$max = (isset($options['max'])) ? $options['max'] : 255;
-		$nouns = DummyData::getNouns();
+		$nouns = Dummy::getNouns();
 		$noun = $nouns[rand(0, count($nouns) - 1)];
 		if ($max < 10) {
 			return ucfirst($noun);
 		}
-		$adjectives = DummyData::getAdjectives();
+		$adjectives = Dummy::getAdjectives();
 		$adj_count = count($adjectives);
 		$adj = $adjectives[rand(0, $adj_count - 1)];
 		$adj = ucfirst($adj);
@@ -50,30 +52,30 @@ class English extends \dummy_data\Data {
 	}
 	
 	public static function noun($options = array()) {
-		$nouns = DummyData::getNouns();
+		$nouns = Dummy::getNouns();
 		$noun = $nouns[rand(0, count($nouns) - 1)];
 		return ucfirst($noun);
 	}
 	
 	public static function verb($options = array()) {
-		$verbs = DummyData::getVerbs();
+		$verbs = Dummy::getVerbs();
 		$verb = $verbs[rand(0, count($verbs) - 1)];
 		return $verb;
 	}
 	
 	public static function quote($options = array()) {
-		$quotes = DummyData::getQuotes();
+		$quotes = Dummy::getQuotes();
 		return $quotes[rand(0, count($quotes) - 1)];
 	}
 	
 	public static function extension($options = array()) {
-		$extensions = DummyData::get_file_extension();
+		$extensions = Dummy::get_file_extension();
 		$extension = $extensions[rand(0, count($extensions) - 1)];
 		return $extension;
 	}
 	
 	public static function filename($options = array()) {
-		$extensions = DummyData::get_file_extension();
+		$extensions = Dummy::get_file_extension();
 		$extension = $extensions[rand(0, count($extensions) - 1)];
 		return low(self::noun($options) . '.' . self::extension($options));
 	}	

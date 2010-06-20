@@ -3,7 +3,7 @@
  * Data hub for the generation
  */
 
-namespace \dummy_data\models;
+namespace dummy_data\models;
 
 #use ;
 
@@ -52,8 +52,10 @@ class Data extends \lithium\core\StaticObject {
 	 * @param array $options
 	 * @return mixed
 	 */
-	public static function generate($class, $method, $options = array()) {	
-		return '\\dummy_data\\models\\lib\\'.$class->$method($options);
+	public static function generate($class, $method, $options = array()) {
+		$class = '\\dummy_data\\models\\lib\\'.$class;
+		dt($class);
+		return $class::$method($options);
 	}
 	
 	/**

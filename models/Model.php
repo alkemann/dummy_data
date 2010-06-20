@@ -4,7 +4,8 @@ namespace dummy_data\models;
 
 use \lithium\data\entity\Document;
 use \dummy_data\models\Type;
-use php_faker\DummyWrapper;
+use \dummy_data\models\Data;
+
 
 class Model extends \lithium\data\Model {
 
@@ -45,7 +46,7 @@ class Model extends \lithium\data\Model {
 			} else {
 				$options = array();
 				$generator = explode('->', $generator);
-				$ret[$field] = DummyWrapper::generate($generator[0], $generator[1], $options);
+				$ret[$field] = Data::generate($generator[0], $generator[1], $options);
 			}
 		}
 		return $ret;

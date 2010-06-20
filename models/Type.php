@@ -36,7 +36,7 @@ class Type extends \lithium\core\StaticObject {
 	private static $_nameMatch = array(
 		'username' => 'Web->username', 
 		'password' => 'Web->password', 
-		'name' => 'Name->name', 
+		'name' => 'Name->a_name', 
 		'firstname' => 'Name->firstname', 
 		'lastname' => 'Name->surname', 
 		'surname' => 'Name->surname', 

@@ -10,11 +10,10 @@
  */
 namespace dummy_data\models\lib;
 
-class Web extends \dummy_data\Data {
+class Web extends \dummy_data\models\Data {
 	
 	private static $_domain_suffix = array('co.uk','com','us','org','ca','biz','info','name','no');
 	
-	public function __construct(){}
 	
 	public static function email($options = array()) {
 		if (isset($options['variable']) && is_string($options['variable'])) {
@@ -26,9 +25,8 @@ class Web extends \dummy_data\Data {
 			return $name . '@example.com';
 		}
 		$options['devider'] = '.';
-		$f = new Faker;
-		$Name = $f->Name;
-		return strtolower($Name->first_name($options) . '.' . $Name->surname($options) . '@example.com');
+		return strtolower(\dummy_data\models\lib\Name::first_name($options) . '.' . 
+		\dummy_data\models\lib\Name::surname($options) . '@example.com');
 	}
 	
 	public static function username($options = array()) {
@@ -37,9 +35,7 @@ class Web extends \dummy_data\Data {
 			$name = low($name[0]);
 			return $name . self::generate_random_alphanumeric_str('xx');
 		}
-		$f = new Faker;
-		$Name = $f->Name;
-		$fname = strtolower($Name->first_name(array('single' => true)));
+		$fname = strtolower(\dummy_data\models\lib\Name::first_name(array('single' => true)));
 		return $fname . self::generate_random_alphanumeric_str('xx');
 	}
 	
@@ -57,7 +53,7 @@ class Web extends \dummy_data\Data {
  	 * @author Caius Durling
 	 * @return string
 	 */
-	public function domain_suffix()
+	public static function domain_suffix()
 	{
 		return parent::random( self::$_domain_suffix );
 	}
@@ -66,7 +62,7 @@ class Web extends \dummy_data\Data {
  	 * @author Caius Durling
 	 * @return string
 	 */
-	public function domain_word()
+	public static function domain_word()
 	{
 		$result = explode( ' ', parent::__get('Company')->name );
 		$result = $result[0];
@@ -79,7 +75,7 @@ class Web extends \dummy_data\Data {
  	 * @author Caius Durling
 	 * @return string
 	 */
-	public function domain_name()
+	public static function domain_name()
 	{
 		$result[] = $this->domain_word;
 		$result[] = $this->domain_suffix;

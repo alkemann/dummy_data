@@ -7,7 +7,9 @@
 */
 namespace dummy_data\models\lib;
 
-class Name extends \dummy_data\Data {
+use \dummy_data\models\lib\Dummy;
+
+class Name extends \dummy_data\models\Data {
 	/**
 	 * Do nothing on being instanced
 	 *
@@ -20,34 +22,29 @@ class Name extends \dummy_data\Data {
 	private static $_prefix = array('Mr.','Mrs.','Ms.','Miss','Dr.');
 	
 	private static $_suffix = array('Jr.','Sr.','I','II','III','IV','V','MD','DDS','PhD','DVM');
-	/**/
-	public function __construct()
-	{
-	}
-	
-	public function a_name()
-	{
+
+	public function a_name() {
 		$a = parent::random( self::$_formats );
 					
 		foreach ($a as $method) {
-			$b[] = $this->$method();
+			$b[] = static::$method();
 		}
 		$result = join($b, " ");
 		
 		return $result;
 	}
 	
-	public function full_name($options = array()) {
+	public static function full_name($options = array()) {
 		$dev = (isset($options['devider'])) ? $options['devider'] : ' ';
 		return self::firstname($options) . $dev . self::surname($options);
 	}
 	
-	public function firstname($options = array()) {
+	public static function firstname($options = array()) {
 		return self::first_name($options);
 	}
 	
-	public function first_name($options = array()) {
-		$first_names = DummyData::get_firstnames();
+	public static function first_name($options = array()) {
+		$first_names = Dummy::get_firstnames();
 		if ((isset($options['single']) && $options['single']) || (isset($options['variable']) && $options['variable'] == 'single'))
 			return self::random_name( $first_names );
 			
@@ -60,8 +57,8 @@ class Name extends \dummy_data\Data {
 		return $ret;
 	}	
 	
-	public function surname($options = array()) {
-		$surnames = DummyData::get_surnames();
+	public static function surname($options = array()) {
+		$surnames = Dummy::get_surnames();
 		if ((isset($options['single']) && $options['single']) || (isset($options['variable']) && $options['variable'] == 'single'))
 			return parent::random( $surnames );
 			
@@ -74,12 +71,12 @@ class Name extends \dummy_data\Data {
 		return $ret;
 	}
 	
-	public function prefix()
+	public static function prefix()
 	{
 		return parent::random( self::$_prefix );
 	}
 	
-	public function suffix()
+	public static function suffix()
 	{
 		return parent::random( self::$_suffix );
 	}	
