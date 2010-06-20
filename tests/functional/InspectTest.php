@@ -15,7 +15,7 @@ class InspectTest extends \lithium\test\Unit {
 		$expected = array(
 			'title' => 'English->title',
 			'author' => array(
-				'name' => 'Name->name',
+				'name' => 'Name->a_name',
 				'username' => 'Web->username',
 				'email' => 'Web->email',
 			),

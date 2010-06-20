@@ -23,7 +23,7 @@ class Name extends \dummy_data\models\Data {
 	
 	private static $_suffix = array('Jr.','Sr.','I','II','III','IV','V','MD','DDS','PhD','DVM');
 
-	public function a_name() {
+	public static function a_name() {
 		$a = parent::random( self::$_formats );
 					
 		foreach ($a as $method) {

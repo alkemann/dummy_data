@@ -36,7 +36,6 @@ class Data extends \lithium\core\StaticObject {
 		),
 		'Company' => array(),
 		'English' => array(),
-		'Lorem' => array(),
 		'Name' => array(),
 		'Number' => array(),
 		'Time' => array(),
@@ -54,7 +53,6 @@ class Data extends \lithium\core\StaticObject {
 	 */
 	public static function generate($class, $method, $options = array()) {
 		$class = '\\dummy_data\\models\\lib\\'.$class;
-		dt($class);
 		return $class::$method($options);
 	}
 	
