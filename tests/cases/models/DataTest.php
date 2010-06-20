@@ -4,7 +4,7 @@
  *
  */
 
-namespace dummy_data\tests\cases;
+namespace dummy_data\tests\cases\models;
 
 use \dummy_data\models\Data;
 
@@ -67,7 +67,6 @@ class DataTest extends \lithium\test\Unit {
 			$this->assertTrue(is_string($result[$generator]));
 		}
 	}
-
 }
 
 ?>

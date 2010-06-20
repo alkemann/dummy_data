@@ -11,7 +11,7 @@ namespace dummy_data\models\lib;
 
 use \dummy_data\models\lib\Dummy;
 
-class English extends \dummy_data\models\Data {
+class English {
 		
 	public function __construct() {
 	}

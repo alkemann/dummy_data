@@ -8,8 +8,9 @@
 namespace dummy_data\models\lib;
 
 use \dummy_data\models\lib\Dummy;
+use \dummy_data\models\Data;
 
-class Name extends \dummy_data\models\Data {
+class Name {
 	/**
 	 * Do nothing on being instanced
 	 *
@@ -24,7 +25,7 @@ class Name extends \dummy_data\models\Data {
 	private static $_suffix = array('Jr.','Sr.','I','II','III','IV','V','MD','DDS','PhD','DVM');
 
 	public static function a_name() {
-		$a = parent::random( self::$_formats );
+		$a = Data::random( self::$_formats );
 					
 		foreach ($a as $method) {
 			$b[] = static::$method();
@@ -60,29 +61,29 @@ class Name extends \dummy_data\models\Data {
 	public static function surname($options = array()) {
 		$surnames = Dummy::get_surnames();
 		if ((isset($options['single']) && $options['single']) || (isset($options['variable']) && $options['variable'] == 'single'))
-			return parent::random( $surnames );
+			return Data::random( $surnames );
 			
 		$dev = (isset($options['devider'])) ? $options['devider'] : ' ';
-		$ret = parent::random( $surnames );
+		$ret = Data::random( $surnames );
 		if (rand(1, 10) < 3)
-			$ret .= $dev . parent::random( $surnames );
+			$ret .= $dev . Data::random( $surnames );
 		if (rand(1, 10) < 1)
-			$ret .= $dev . parent::random( $surnames );
+			$ret .= $dev . Data::random( $surnames );
 		return $ret;
 	}
 	
 	public static function prefix()
 	{
-		return parent::random( self::$_prefix );
+		return Data::random( self::$_prefix );
 	}
 	
 	public static function suffix()
 	{
-		return parent::random( self::$_suffix );
+		return Data::random( self::$_suffix );
 	}	
 	
 	private static function random_name(& $array) {
-		$res =  parent::random($array);
+		$res =  Data::random($array);
 		return $res[0];
 	}
 }

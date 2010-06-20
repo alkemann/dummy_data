@@ -11,7 +11,7 @@
  */
 namespace dummy_data\models\lib;
 
-class Number extends \dummy_data\Data {
+class Number { 
 	
 	public function __construct() {	}
 

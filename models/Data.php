@@ -17,7 +17,7 @@ namespace dummy_data\models;
  * @version 2.0
  * @modified 20 june 2009
  */
-class Data extends \lithium\core\StaticObject {
+class Data { 
 	
 	/**
 	 * List of current generator classes.
@@ -156,7 +156,7 @@ class Data extends \lithium\core\StaticObject {
 	 * @return string
 	 * @author Caius Durling
 	 */	
-	protected static function random(&$array) {
+	public static function random(&$array) {
 		return $array[mt_rand(0, count($array)-1)];
 	}
 	
@@ -166,7 +166,7 @@ class Data extends \lithium\core\StaticObject {
 	 * @return integer
 	 * @author Caius Durling
 	 */
-	protected function rand_num() {
+	public static function rand_num() {
 		return mt_rand(0, 9);
 	}
 	
@@ -176,7 +176,7 @@ class Data extends \lithium\core\StaticObject {
 	 * @return string
 	 * @author Caius Durling
 	 */
-	protected function rand_letter() {
+	public static function rand_letter() {
 		return chr(mt_rand(97, 122));
 	}
 

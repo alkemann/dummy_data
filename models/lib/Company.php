@@ -8,7 +8,7 @@
  */
 namespace dummy_data\models\lib;
 
-class Company extends \dummy_data\Data {
+class Company extends \dummy_data\models\Data {
 	/**
 	 * Do nothing on being created
 	 *
