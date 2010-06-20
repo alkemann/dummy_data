@@ -4,7 +4,7 @@
  *
  */
 
-namespace dummy_data\tests\functional;
+namespace dummy_data\tests\cases;
 
 use php_faker\DummyWrapper;
 

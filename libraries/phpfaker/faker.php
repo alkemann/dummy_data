@@ -14,6 +14,9 @@
  * @version 2.0
  * @modified 6. feb 2009
  */
+
+namespace php_faker;
+
 class Faker
 {
 	
@@ -29,15 +32,13 @@ class Faker
 		
 	public function &__get( $var ){
 		if (empty(self::$_instances[$var])) {
-			$filename = "lib/".strtolower($var).".php";
-			include $filename;
-			self::$_instances[$var] = new $var;
+			$class = '\php_faker\lib\\'.$var;
+			include_once('lib/'.strtolower($var).'.php');
+			self::$_instances[$var] = new $class;
 
 		}
 		return self::$_instances[$var];
 	}
-	
-	// todo: use __autoload()
 	
 	/**
 	 * Returns a random element from a passed array

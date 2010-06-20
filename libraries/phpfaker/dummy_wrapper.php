@@ -11,6 +11,7 @@
 
 namespace php_faker;
 
+use \php_faker\Faker;
 include_once 'faker.php';
 
 class DummyWrapper {
@@ -51,7 +52,7 @@ class DummyWrapper {
 	 */
 	public static function generate($class, $method, $options = array()) {	
 		if (is_null(self::$Faker) ) {
-			self::$Faker = new \Faker; 
+			self::$Faker = new Faker; 
 		}
 		return self::$Faker->$class->$method($options);
 	}

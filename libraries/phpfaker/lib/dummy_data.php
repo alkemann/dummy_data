@@ -1,5 +1,7 @@
 <?php
 
+namespace php_faker\lib;
+
 class DummyData {
 	
 	public static function get_cities() {

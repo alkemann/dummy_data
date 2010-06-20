@@ -6,7 +6,13 @@
  * @modified 6. feb. 2009
  * 
  */
-class English extends Faker {
+
+namespace php_faker\lib;
+
+use \php_faker\lib\DummyData;
+include_once('dummy_data.php');
+
+class English extends \php_faker\Faker {
 	
 	public function __construct() {
 	}
