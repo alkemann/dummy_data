@@ -12,8 +12,12 @@ class GeneratorsController extends \lithium\action\Controller {
 	}
 
 	public function view($class) {
-		$methods = Data::listMethods($method);
-		return compact('methods');
+		$methods = Data::listMethods($class);
+		$examples = array();
+		foreach ($methods as $method) {
+			$examples[$method] = Data::generate($class, $method);
+		}
+		return compact('methods','class','examples');
 	}
 }
 ?>

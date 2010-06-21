@@ -8,7 +8,9 @@
  */
 namespace dummy_data\models\lib;
 
-class Company extends \dummy_data\models\Data {
+use \dummy_data\models\Data;
+
+class Company {
 	/**
 	 * Do nothing on being created
 	 *
@@ -22,41 +24,33 @@ class Company extends \dummy_data\models\Data {
 	private static $_suffix = array('Inc','andSons','LLC','Group','PLC','Ltd');
 	private static $_name_formats = array(array('surname','','surname'),array('surname','-','surname'),array('surname','','surname','and','surname'));
 	
-	public function __construct()
-	{
-	}
-	
-	public function name()
-	{
+	public static function name()	{
 		
 		
-		foreach ( parent::random( self::$_name_formats ) as $elem ) {
+		foreach ( Data::random( self::$_name_formats ) as $elem ) {
 			$result[] = $elem;
 			// And now replace it if it needs it
 			if ( $elem == 'surname' ) {
-				$result[ count($result) - 1 ] = parent::__get('Name')->surname;
+				$result[ count($result) - 1 ] = \dummy_data\models\lib\Name::surname();
 			}
 		}
 		return join( $result );
 	}
 	
-	public function suffix()
-	{
-		return parent::random( self::$_suffix );
+	public static function suffix()	{
+		return Data::random( self::$_suffix );
 	}
 	
-	public function catch_phrase()
-	{
+	public static function catch_phrase() {
 		foreach (self::$_catch_phrase_words as &$word) {
-			$result[] = parent::random( $word );
+			$result[] = Data::random( $word );
 		}
 		return join( $result, " " );
 	}
 	
-	public function bs()
-	{
+	public static function bs()	{
 		foreach (self::$_bs_words as &$word) {
-			$result[] = parent::random( $word );
+			$result[] = Data::random( $word );
 		}
 		return join( $result, " " );
 	}

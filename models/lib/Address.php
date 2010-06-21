@@ -11,6 +11,8 @@
  */
 namespace dummy_data\models\lib;
 
+use \dummy_data\models\Data;
+
 class Address { 
 	 
 	private static $_street_suffix = array('Alley','Avenue','Branch','Bridge','Brook','Brooks','Burg','Burgs','Bypass','Camp','Canyon','Cape','Causeway','Center','Centers','Circle','Circles','Cliff','Cliffs','Club','Common','Corner','Corners','Course','Court','Courts','Cove','Coves','Creek','Crescent','Crest','Crossing','Crossroad','Curve','Dale','Dam','Divide','Drive','Drive','Drives','Estate','Estates','Expressway','Extension','Extensions','Fall','Falls','Ferry','Field','Fields','Flat','Flats','Ford','Fords','Forest','Forge','Forges','Fork','Forks','Fort','Freeway','Garden','Gardens','Gateway','Glen',
@@ -21,22 +23,22 @@ class Address {
 	
 	public static function phone($options = array()) {
 		$syntax = isset($options['variable']) ? $options['variable'] : '(47) Xx xx xx xx';
-		return self::generate_random_num_str($syntax);
+		return Data::generate_random_num_str($syntax);
 	}
 		
 	public static function street_suffix() {		
-		return parent::random( self::$_street_suffix );
+		return Data::random( self::$_street_suffix );
 	}
 	
 	public static function street_name() {
-		$method = parent::random( self::$_street_name_formats );
-		$result[] = parent::__get('Name')->$method;
+		$method = Data::random( self::$_street_name_formats );
+		$result[] = \dummy_data\models\lib\Name::$method();
 		$result[] = self::street_suffix();
 		return implode($result, " ");
 	}
 	
 	public static function street_address() {
-		return parent::generate_random_alphanumeric_str( implode( " ", array( 'xxxxx' , self::street_name() ) ) );
+		return Data::generate_random_alphanumeric_str( implode( " ", array( 'xxxxx' , self::street_name() ) ) );
 	}
 	
 	public static function abode_address( $include_street=false ) {
@@ -47,11 +49,11 @@ class Address {
 				'Apt. Xxx',
 				'Suite Xxx'
 			);
-		$str[] = parent::random( $formats );
+		$str[] = Data::random( $formats );
 		if ( $include_street ) {
 			$str[] = self::street_name();
 		}
-		return parent::generate_random_alphanumeric_str( implode( " ", $str ) );
+		return Data::generate_random_alphanumeric_str( implode( " ", $str ) );
 	}
 	
 	public static function post_code($options = array()) {
@@ -64,7 +66,7 @@ class Address {
 		} else {
 			$a = 'Xxxx';
 		}
-		$result = parent::generate_random_alphanumeric_str( $a );
+		$result = Data::generate_random_alphanumeric_str( $a );
 		return $result;
 	}	
 	

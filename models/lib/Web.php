@@ -10,7 +10,10 @@
  */
 namespace dummy_data\models\lib;
 
-class Web extends \dummy_data\models\Data {
+use \dummy_data\models\Data;
+use \dummy_data\models\lib\Dummy;
+
+class Web {
 	
 	private static $_domain_suffix = array('co.uk','com','us','org','ca','biz','info','name','no');
 	
@@ -33,10 +36,10 @@ class Web extends \dummy_data\models\Data {
 		if (isset($options['variable'])) {
 			$name = explode(' ', $options['variable']);
 			$name = low($name[0]);
-			return $name . self::generate_random_alphanumeric_str('xx');
+			return $name . Data::generate_random_alphanumeric_str('xx');
 		}
 		$fname = strtolower(\dummy_data\models\lib\Name::first_name(array('single' => true)));
-		return $fname . self::generate_random_alphanumeric_str('xx');
+		return $fname . Data::generate_random_alphanumeric_str('xx');
 	}
 	
 	public static function password($options = array()) {
@@ -44,8 +47,7 @@ class Web extends \dummy_data\models\Data {
 	}
 	
 	public static function url($options = array()) {
-		App::import('vendor', 'dummy.phpfaker/lib/dummy_data');
-		$urls = &DummyData::get_urls();
+		$urls = Dummy::get_urls();
 		return $urls[rand(0, count($urls) - 1)];
 	}
 	
@@ -53,18 +55,16 @@ class Web extends \dummy_data\models\Data {
  	 * @author Caius Durling
 	 * @return string
 	 */
-	public static function domain_suffix()
-	{
-		return parent::random( self::$_domain_suffix );
+	public static function domain_suffix()	{
+		return Data::random( self::$_domain_suffix );
 	}
 	
 	/**
  	 * @author Caius Durling
 	 * @return string
 	 */
-	public static function domain_word()
-	{
-		$result = explode( ' ', parent::__get('Company')->name );
+	public static function domain_word() {
+		$result = explode( ' ', \dummy_data\models\lib\Company::name() );
 		$result = $result[0];
 		$result = strtolower( $result );
 		$result = preg_replace( "/\W/", '', $result );
@@ -75,12 +75,12 @@ class Web extends \dummy_data\models\Data {
  	 * @author Caius Durling
 	 * @return string
 	 */
-	public static function domain_name()
-	{
-		$result[] = $this->domain_word;
-		$result[] = $this->domain_suffix;
+	public static function domain_name() {
+		$result[] = static::domain_word();
+		$result[] = static::domain_suffix();
 		return join( $result, '.' );
 	}	
+
 	/**
 	 * Generates HTML content for a string. Adding some html formating code to the content
 	 * $options min_size and max

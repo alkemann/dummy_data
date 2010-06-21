@@ -10,6 +10,8 @@
  */
 namespace dummy_data\models\lib;
 
+use \dummy_data\models\Data;
+
 class Uk extends \dummy_data\models\lib\Address {
 	
 	private static $_uk_counties = array('Avon','Bedfordshire','Berkshire','Borders','Buckinghamshire','Cambridgeshire','Central','Cheshire','Cleveland','Clwyd','Cornwall','CountyAntrim','CountyArmagh','CountyDown','CountyFermanagh','CountyLondonderry','CountyTyrone','Cumbria','Derbyshire','Devon','Dorset','DumfriesandGalloway','Durham','Dyfed','EastSussex','Essex','Fife','Gloucestershire','Grampian','GreaterManchester','Gwent','GwyneddCounty','Hampshire','Herefordshire','Hertfordshire','HighlandsandIslands','Humberside','IsleofWight','Kent','Lancashire','Leicestershire','Lincolnshire','Lothian','Merseyside','MidGlamorgan','Norfolk','NorthYorkshire','Northamptonshire','Northumberland','Nottinghamshire','Oxfordshire','Powys','Rutland','Shropshire','Somerset','SouthGlamorgan','SouthYorkshire','Staffordshire','Strathclyde','Suffolk','Surrey','Tayside','TyneandWear','Warwickshire','WestGlamorgan','WestMidlands','WestSussex','WestYorkshire','Wiltshire','Worcestershire');
@@ -19,21 +21,21 @@ class Uk extends \dummy_data\models\lib\Address {
 	
 	public static function uk_county()
 	{
-		return parent::random( self::$_uk_counties );
+		return Data::random( self::$_uk_counties );
 	}
 	
 	public static function uk_country()
 	{
-		return parent::random( self::$_uk_countries );
+		return Data::random( self::$_uk_countries );
 	}
 	
 	public static function post_code($options = array()) {
 		if (isset($options['variable'])) {
 			$a = $options['variable'];
 		} else {
-			$a = parent::random( self::$_uk_postcode_formats );
+			$a = Data::random( self::$_uk_postcode_formats );
 		}
-		$result = parent::generate_random_alphanumeric_str( $a );
+		$result = Data::generate_random_alphanumeric_str( $a );
 		return strtoupper($result);
 	}		
 }

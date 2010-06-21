@@ -17,12 +17,12 @@ class English {
 	}
 	
 	public static function city($options = array()) {
-		$cities = &Dummy::get_cities();
+		$cities = Dummy::get_cities();
 		return $cities[rand(0, count($cities) - 1)];
 	}
 	
 	public static function color($options = array()) {
-		$colors = &Dummy::get_colors();
+		$colors = Dummy::get_colors();
 		return $colors[rand(0, count($colors) - 1)];
 	}
 	public static function title($options = array()) {
@@ -77,7 +77,7 @@ class English {
 	public static function filename($options = array()) {
 		$extensions = Dummy::get_file_extension();
 		$extension = $extensions[rand(0, count($extensions) - 1)];
-		return low(self::noun($options) . '.' . self::extension($options));
+		return strtolower(self::noun($options) . '.' . self::extension($options));
 	}	
 }
 ?>
