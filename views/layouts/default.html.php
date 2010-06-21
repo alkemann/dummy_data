@@ -16,6 +16,7 @@
 			<h1>Dummy Data Generator</h1>
 			<ul>
 				<li><?=$this->html->link('List Models', '/dummy_data');?></li>
+				<li><?=$this->html->link('List Generators', '/dummy_data/generators');?></li>
 			</ul>
 			<hr>
 		</div>
