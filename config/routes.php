@@ -15,6 +15,12 @@ Router::connect('/dummy_data/view/{:args}', array(
 	'controller' => 'models',
 	'action' => 'view'
 ));
+Router::connect('/dummy_data/fill/{:args}', array(
+	'plugin' => 'dummy_data',
+	'controller' => 'models',
+	'action' => 'fill'
+));
+
 
 Router::connect('/dummy_data/generators', array(
 	'plugin' => 'dummy_data',
