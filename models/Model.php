@@ -49,7 +49,9 @@ class Model extends \lithium\data\Model {
 	public static function fill(array $fields) {
 		$ret = array();
 		foreach ($fields as $field => $generator) {
-			if (is_array($generator)) {
+			if ($generator == null) {
+			 $ret[$field] = null;
+			} elseif (is_array($generator)) {
 				$ret[$field] = static::fill($generator);
 			} else {
 				$options = array();
@@ -58,6 +60,25 @@ class Model extends \lithium\data\Model {
 			}
 		}
 		return $ret;
+	}
+
+	public static function find($type, array $options = array()) {
+		$models = array();
+		switch ($type) {
+			case 'first' :
+				$name = $options['conditions']['_id'];
+				$models[] = \lithium\core\Libraries::locate('models', $name);
+			break;
+			case 'all' :
+			default:
+				$all =  \lithium\core\Libraries::locate('models', null, $options);
+				foreach ($all as $one) {
+					if (substr($one,0,10) != 'dummy_data') 
+						$models[] = $one;
+				}
+			break;
+		}
+		return $models;
 	}
 }
 ?>
