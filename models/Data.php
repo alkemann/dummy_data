@@ -75,6 +75,12 @@ class Data {
 		return $ret;
 	}
 
+	public static function listGenerators() {
+		return ((array) static::listStringGenerators()) +
+			((array) static::listTimeGenerators()) +
+			((array) static::listNumberGenerators());
+	}
+
 	/**
 	 * Returns array list of all generators in the specified class
 	 *
