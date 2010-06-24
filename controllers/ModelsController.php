@@ -34,6 +34,7 @@ class ModelsController extends \lithium\action\Controller {
 			$this->redirect($this->indexAction);
  		$fields = $fields->data();	
 		$example = Model::fill($fields);
+
 		return compact('model','fields','example','modelParam');
 	}
 

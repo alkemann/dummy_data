@@ -26,25 +26,31 @@ class Model extends \lithium\data\Model {
 	 	$model = $data[0];
 		$model = substr($model,0,1) == '\\'?$model:'\\'.$model;
 		if (!class_exists($model)) return null;
-		$data = static::inspect(null, $model::first()->data());
+		$schema = $model::schema();
+		if (is_null($schema)) {
+			$data = static::inspect(null, $model::first()->data(), $model);
+		} else {
+			$data = array();
+			foreach ($schema as $field => $settings) {
+				$gen = Type::matchName($field);
+				if (!$gen) $gen = Type::matchType($settings);
+				$data[$field] = $gen;
+			}
+		}
 		$doc = new Document(array('data' => $data));
 		return $doc;
 	}
 
-	private static function inspect($field, $value) {
+	private static function inspect($field, $value, $model) {
 		if (is_array($value)) {
 			$ret = array();
 			foreach ($value as $f => $v) {
-				$ret[$f] = static::inspect($f,$v);
+				$ret[$f] = static::inspect($f,$v, $model);
 			}	
 			return $ret;
 		} else {
-			return static::inspectField($field, $value);
+			return Type::matchName($field);
 		}
-	}
-
-	public static function inspectField($fieldname, $fieldvalue = null) {
-		return Type::matchName($fieldname);
 	}
 
 	public static function fill(array $fields) {
@@ -68,7 +74,7 @@ class Model extends \lithium\data\Model {
 		switch ($type) {
 			case 'first' :
 				$name = $options['conditions']['_id'];
-				return $name::schema();
+				return null;
 			break;
 			case 'all' :
 			default:

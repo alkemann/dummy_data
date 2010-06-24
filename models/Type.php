@@ -62,11 +62,10 @@ class Type {
 		'description' => 'English->quote', 
 		'signature' => 'English->quote',
 		'address' => 'Address->street_address',
-		'created' => 'Time->datetime',
-		'body' => 'Lorem->sentence'
+		'created' => 'Time->datetime'
 	);
 	
-	private $_typeMatch = array(
+	private static $_typeMatch = array(
 		'boolean' => 'Number->boolean', 
 		'string' => 'Lorem->sentence', 
 		'integer' => 'Number->tinyInt', 
@@ -75,7 +74,7 @@ class Type {
 		'time' => 'Time->time', 
 		'float' => 'Number->float', 
 		'binary' => 'Lorem->sentence',
-    'text' => 'English->quote'
+    	'text' => 'English->quote'
 	);
 	
 	public $specialGenerators = array(
@@ -134,9 +133,11 @@ class Type {
 		return null;
 	}
 	
-	private function _matchType($fieldType) {
-		if (isset($this->_typeMatch[$fieldType])) {
-			return $this->_typeMatch[$fieldType];
+	public static function matchType(array $settings = array()) {
+		if (empty($settings) || !isset($settings['type'])) return null;
+		$fieldType = $settings['type'];
+		if (isset(static::$_typeMatch[$fieldType])) {
+			return static::$_typeMatch[$fieldType];
 		}
 		return null;
 	}
