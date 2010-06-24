@@ -1,13 +1,13 @@
 <h2>Filling</h2>
 <h3><?=$modelName?></h3>
-<?php if (isset($success)) { ?>
+<?php if (!is_null($success)) { ?>
 <h4 style="color:<?=($success)?'green':'red';?>">
  <?=($success)?'SUCCESS':'FAIL';?>
 </h4>
 <h3>Generated data (read back from data source)</h3>
 <ul>
 <?php 
-$modelArr = explode('\\',$model);
+$modelArr = explode('\\',$modelName);
 #$plugin = reset($modelArr);
 $controller = end($modelArr);
 $controller = strtolower(\lithium\util\Inflector::pluralize($controller));
@@ -34,7 +34,8 @@ foreach ($created->data() as $doc) {
 echo $this->form->create(null, array('url' => array(
 	'plugin' => 'dummy_data',
 	'controller' => 'models',
-	'action' => 'fill'
+	'action' => 'fill',
+	'args' => array($modelParam)
 )));
 ?>
 <dl>
@@ -53,8 +54,8 @@ foreach ($fields as $field => $generator) :
 <?php 
 echo $this->form->hidden('model', array('value' => $modelName));
 echo $this->special->radio('count', array('value' => 1,'id' => 'count1', 'label' => 'One', 'checked' => true));
+echo $this->special->radio('count', array('value' => 5,'id' => 'count1', 'label' => 'Five'));
 echo $this->special->radio('count', array('value' => 10,'id' => 'count1', 'label' => 'Ten'));
-echo $this->special->radio('count', array('value' => 50,'id' => 'count1', 'label' => 'Fifty'));
 ?>
 </dl>
 <?php

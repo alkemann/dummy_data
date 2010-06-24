@@ -24,6 +24,7 @@ class Model extends \lithium\data\Model {
 			return $ret;
 		}
 	 	$model = $data[0];
+		$model = substr($model,0,1) == '\\'?$model:'\\'.$model;
 		if (!class_exists($model)) return null;
 		$data = static::inspect(null, $model::first()->data());
 		$doc = new Document(array('data' => $data));
@@ -67,7 +68,8 @@ class Model extends \lithium\data\Model {
 		switch ($type) {
 			case 'first' :
 				$name = $options['conditions']['_id'];
-				$models[] = \lithium\core\Libraries::locate('models', $name);
+#				$models[] = \lithium\core\Libraries::locate('models', $name);
+				return null;
 			break;
 			case 'all' :
 			default:
