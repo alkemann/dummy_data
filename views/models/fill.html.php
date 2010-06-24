@@ -39,6 +39,20 @@ echo $this->form->create(null, array('url' => array(
 )));
 ?>
 <dl>
+<dt>Generate how many new records?</dt><dd>
+<?php 
+echo $this->form->hidden('model', array('value' => $modelName));
+echo $this->special->radio('count', array(
+	'value' => 1,'id' => 'count1', 'label' => 'One', 'checked' => true
+));
+echo $this->special->radio('count', array('value' => 5,'id' => 'count1', 'label' => 'Five'));
+echo $this->special->radio('count', array('value' => 10,'id' => 'count1', 'label' => 'Ten'));
+?></dd>
+<dt>&nbsp;</dt><dd>
+<?=$this->form->submit('Generate and save new records'); ?>
+<?=$this->form->submit('Refresh examples', array('name' => 'refresh')); ?>
+<hr>
+</dd>
 <?php 
 foreach ($fields as $field => $generator) : 
 	if ($field == '_id' || $field == 'id') continue;
@@ -50,17 +64,8 @@ foreach ($fields as $field => $generator) :
 		<hr>
 	</dd>
 <?php endforeach; ?>
-<dt>Generate how many new records?</dt><dd>
-<?php 
-echo $this->form->hidden('model', array('value' => $modelName));
-echo $this->special->radio('count', array('value' => 1,'id' => 'count1', 'label' => 'One', 'checked' => true));
-echo $this->special->radio('count', array('value' => 5,'id' => 'count1', 'label' => 'Five'));
-echo $this->special->radio('count', array('value' => 10,'id' => 'count1', 'label' => 'Ten'));
-?>
 </dl>
 <?php
-echo $this->form->submit('Generate and save new records');
-echo $this->form->submit('Refresh examples', array('name' => 'refresh'));
 echo $this->form->end();
 
 } ?>

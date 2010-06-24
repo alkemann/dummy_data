@@ -68,8 +68,7 @@ class Model extends \lithium\data\Model {
 		switch ($type) {
 			case 'first' :
 				$name = $options['conditions']['_id'];
-#				$models[] = \lithium\core\Libraries::locate('models', $name);
-				return null;
+				return $name::schema();
 			break;
 			case 'all' :
 			default:
