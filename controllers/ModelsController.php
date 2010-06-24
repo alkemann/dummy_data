@@ -6,26 +6,44 @@ use \dummy_data\models\Model;
 
 class ModelsController extends \lithium\action\Controller {
 
+	private $indexAction = array(
+		'plugin' => 'dummy_data',
+		'controller' => 'models',
+		'action' => 'index',
+	);
+
+	/**
+	 * List all views in the app
+	 */
 	public function index() {
 		$models	= Model::all(array('library' => 'app'));
 		return compact('models');
 	}
 
-	public function view($modelParam) {
+	/**
+	 * Inspect a model, either session stored field with generators is presented, 
+	 * or what default guess will be.
+	 */
+	public function view($modelParam = null) {
+		if (is_null($modelParam)) $this->redirect($this->indexAction);
 		$model = str_replace('-','\\',$modelParam);
 		$fields = Model::first($model);
-		if (empty($fields)) $this->redirect(array(
-			'plugin' => 'dummy_data',
-			'controller' => 'models',
-			'action' => 'fill',
-			'args' => array($modelParam)
-		));
-		$example = Model::fill($fields->data());
-		return compact('model','fields','example');
+		if (empty($fields))
+			$fields = Model::create(array($model));
+		if (empty($fields)) 
+			$this->redirect($this->indexAction);
+ 		$fields = $fields->data();	
+		$example = Model::fill($fields);
+		return compact('model','fields','example','modelParam');
 	}
 
+	/**
+	 * Present a form for selecting generators, recieve posted form for generation
+	 */
 	public function fill($modelParam = null) {
+		if (is_null($modelParam)) $this->redirect($this->indexAction);
 		$success = null; $count = 0; $generators = null; $created = null;
+		// if form is posted with the refresh key, means the Refresh examples button was pressed
 		if (!empty($this->request->data) && isset($this->request->data['refresh'])) {
 			$modelName = $this->request->data['model']; unset($this->request->data['model']);
 			$count = $this->request->data['count']; unset($this->request->data['count']);
@@ -38,6 +56,7 @@ class ModelsController extends \lithium\action\Controller {
 			}
 			$generators = \dummy_data\models\Data::listGenerators();
 		} elseif (!empty($this->request->data)) {
+		// if form is posted without refresh, means a fill action is requested
 			$modelName = $this->request->data['model']; unset($this->request->data['model']);
 			$count = $this->request->data['count']; unset($this->request->data['count']);
 			unset($this->request->data['refresh']);
@@ -62,6 +81,7 @@ class ModelsController extends \lithium\action\Controller {
 			}
 				
 		} else {
+		// No data posted means enter view, retrieve any existing info and present them
 			$modelName = str_replace('-','\\',$modelParam);
 			$fields = Model::create(array($modelName))->data();
 			$examples = Model::fill($fields);
