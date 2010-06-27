@@ -6,9 +6,11 @@ use \lithium\data\entity\Document;
 
 class MockComment extends \lithium\data\Model {
 
-	public $meta = array(
-		'connection' => null,
-		'source' => null
+	protected $_schema = array(
+		'name' => array('type' => 'varchar'),
+		'created' => array('type' => 'datetime'),
+		'website' => array('type' => 'varchar'),
+		'body' => array('type' => 'text')
 	);
 
 	public static function find($type, array $options = array()) {

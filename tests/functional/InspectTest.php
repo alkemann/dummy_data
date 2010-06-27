@@ -20,9 +20,24 @@ class InspectTest extends \lithium\test\Unit {
 				'email' => 'Web->email',
 			),
 			'created' => 'Time->datetime',
-			'body' => 'Lorem->sentence'
+			'body' => null
 		);
-		$this->assertEqual($result, $expected);
+		$this->assertEqual($expected, $result);
+	}
+
+	public function testInspectSchema() {
+		$model = MockModel::create(array(
+			'\dummy_data\tests\mocks\models\MockComment'
+		));
+		
+		$result = $model->data();
+		$expected = array(
+			'name' => 'Name->a_name',
+			'created' => 'Time->datetime',
+			'website' => 'Web->url',
+			'body' => 'English->quote'
+		);
+		$this->assertEqual($expected, $result);
 	}
 }
 ?>

@@ -21,7 +21,6 @@ class GenerateTest extends \lithium\test\Unit {
 		$this->assertTrue(is_array($result) && !empty($result));
 		$this->assertTrue(isset($result['title']) && !empty($result['title']));
 		$this->assertTrue(isset($result['created']) && !empty($result['created']));
-		$this->assertTrue(isset($result['body']) && !empty($result['body']));
 		$this->assertTrue(isset($result['author']['name']) && !empty($result['author']['name']));
 		$this->assertTrue(isset($result['author']['email']) && !empty($result['author']['email']));
 		$this->assertTrue(isset($result['author']['username']) && !empty($result['author']['username']));

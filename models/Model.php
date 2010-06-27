@@ -27,7 +27,7 @@ class Model extends \lithium\data\Model {
 		$model = substr($model,0,1) == '\\'?$model:'\\'.$model;
 		if (!class_exists($model)) return null;
 		$schema = $model::schema();
-		if (is_null($schema)) {
+		if (is_null($schema) || empty($schema) ) {
 			$data = static::inspect(null, $model::first()->data(), $model);
 		} else {
 			$data = array();
@@ -62,8 +62,8 @@ class Model extends \lithium\data\Model {
 				$ret[$field] = static::fill($generator);
 			} else {
 				$options = array();
-				$generator = explode('->', $generator);
-				$ret[$field] = Data::generate($generator[0], $generator[1], $options);
+				list($class, $method) = explode('->', $generator);
+				$ret[$field] = Data::generate($class, $method, $options);
 			}
 		}
 		return $ret;
