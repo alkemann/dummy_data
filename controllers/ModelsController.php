@@ -6,12 +6,6 @@ use \dummy_data\models\Model;
 
 class ModelsController extends \lithium\action\Controller {
 
-	private $indexAction = array(
-		'plugin' => 'dummy_data',
-		'controller' => 'models',
-		'action' => 'index',
-	);
-
 	/**
 	 * List all views in the app
 	 */
@@ -21,18 +15,18 @@ class ModelsController extends \lithium\action\Controller {
 	}
 
 	/**
-	 * Inspect a model, either session stored field with generators is presented, 
+	 * Inspect a model, either session stored field with generators is presented,
 	 * or what default guess will be.
 	 */
 	public function view($modelParam = null) {
-		if (is_null($modelParam)) $this->redirect($this->indexAction);
+		if (is_null($modelParam)) $this->redirect(array('action' => 'index'));
 		$model = str_replace('-','\\',$modelParam);
 		$fields = Model::first($model);
 		if (empty($fields))
 			$fields = Model::create(array($model));
-		if (empty($fields)) 
-			$this->redirect($this->indexAction);
- 		$fields = $fields->data();	
+		if (empty($fields))
+			$this->redirect(array('action' => 'index'));
+ 		$fields = $fields->data();
 		$example = Model::fill($fields);
 
 		return compact('model','fields','example','modelParam');
@@ -42,7 +36,7 @@ class ModelsController extends \lithium\action\Controller {
 	 * Present a form for selecting generators, recieve posted form for generation
 	 */
 	public function fill($modelParam = null) {
-		if (is_null($modelParam)) $this->redirect($this->indexAction);
+		if (is_null($modelParam)) $this->redirect(array('action' => 'index'));
 		$success = null; $count = 0; $generators = null; $created = null;
 		// if form is posted with the refresh key, means the Refresh examples button was pressed
 		if (!empty($this->request->data) && isset($this->request->data['refresh'])) {
@@ -80,7 +74,7 @@ class ModelsController extends \lithium\action\Controller {
 					'limit' => $limit
 				));
 			}
-				
+
 		} else {
 		// No data posted means enter view, retrieve any existing info and present them
 			$modelName = str_replace('-','\\',$modelParam);
