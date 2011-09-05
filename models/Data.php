@@ -36,8 +36,10 @@ class Data {
 		),
 		'Company' => array(),
 		'English' => array(),
+		'Lorem' => array(),
 		'Name' => array(),
 		'Number' => array(),
+		'Special' => array(),
 		'Time' => array(),
 		'Web' => array()
 	);
