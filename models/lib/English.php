@@ -79,5 +79,11 @@ class English {
 		$extension = $extensions[rand(0, count($extensions) - 1)];
 		return strtolower(self::noun($options) . '.' . self::extension($options));
 	}	
+
+	public static function gender($options = array()) {
+		$genders = array('male','female','undisclosed');
+		return $genders[round(rand(0,2))];
+	}
+
 }
 ?>

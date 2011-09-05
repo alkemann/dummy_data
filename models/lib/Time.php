@@ -80,6 +80,10 @@ class Time {
 		return date('H:i:s',$timestamp);
 	}
 	
+        public function time($options = array()) {
+            return '0'.rand(0,9).':00';
+        }
+
 	public static function datetime($options = array()) {
 		return self::date($options) . ' ' . self::clock($options);
 	}

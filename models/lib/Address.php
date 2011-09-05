@@ -22,7 +22,7 @@ class Address {
 	private static $_street_name_formats = array('first_name','surname');
 	
 	public static function phone($options = array()) {
-		$syntax = isset($options['variable']) ? $options['variable'] : '(47) Xx xx xx xx';
+		$syntax = isset($options['variable']) ? $options['variable'] : '+47 Xxxxxxxx';
 		return Data::generate_random_num_str($syntax);
 	}
 		
