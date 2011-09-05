@@ -19,17 +19,21 @@ class Web {
 	
 	
 	public static function email($options = array()) {
+                $domain = '@example.com';
+		if (isset($options['domain']) && is_string($options['domain'])) {
+                    $domain = '@'.$options['domain'];
+                }
 		if (isset($options['variable']) && is_string($options['variable'])) {
 			$name = low(str_replace(' ', '.', $options['variable']));
-			return $name . '@example.com';
+			return $name . $domain;
 		}
 		if (isset($options['variable']) && is_array($options['variable'])) {
 			$name = low(str_replace(' ', '.', implode('.', $options['variable'])));
-			return $name . '@example.com';
+			return $name . $domain;
 		}
 		$options['devider'] = '.';
 		return strtolower(\dummy_data\models\lib\Name::first_name($options) . '.' . 
-		\dummy_data\models\lib\Name::surname($options) . '@example.com');
+		\dummy_data\models\lib\Name::surname($options) . $domain);
 	}
 	
 	public static function username($options = array()) {
