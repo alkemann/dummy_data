@@ -15,24 +15,6 @@ class ModelsController extends \lithium\action\Controller {
 	}
 
 	/**
-	 * Inspect a model, either session stored field with generators is presented,
-	 * or what default guess will be.
-	 */
-	public function view($modelParam = null) {
-		if (is_null($modelParam)) $this->redirect(array('action' => 'index'));
-		$model = str_replace('-','\\',$modelParam);
-		$fields = Model::first($model);
-		if (empty($fields))
-			$fields = Model::create(array($model));
-		if (empty($fields))
-			$this->redirect(array('action' => 'index'));
- 		$fields = $fields->data();
-		$example = Model::fill($fields);
-
-		return compact('model','fields','example','modelParam');
-	}
-
-	/**
 	 * Present a form for selecting generators, recieve posted form for generation
 	 */
 	public function fill($modelParam = null) {

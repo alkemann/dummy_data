@@ -3,7 +3,7 @@
 <?php
 foreach ($models as $model) {
 	echo '<li>'.$this->html->link($model, array(
-		'action' => 'view',
+		'action' => 'fill',
 		'args' => array(str_replace('\\','-',$model))
 	)).'</li>';
 }
