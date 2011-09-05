@@ -9,20 +9,20 @@ namespace dummy_data\models;
 
 /**
  *  This file is based upon the PhpFaker by Caius Durling
- * 
- * 
+ *
+ *
  * @license MIT
  * @author Caius Durling
  * @author Alexander 'alkemann' Morland
  * @version 2.0
  * @modified 20 june 2009
  */
-class Data { 
-	
+class Data {
+
 	/**
 	 * List of current generator classes.
-	 * Expand this list when creating new classes. 
-	 * Classes added here should be iincluded in one 
+	 * Expand this list when creating new classes.
+	 * Classes added here should be iincluded in one
 	 * of the tree list[Type]Generator methods bellow.
 	 *
 	 * @var array
@@ -30,7 +30,7 @@ class Data {
 	 * @author Alexander Morland
 	 */
 	private static $generator_classes = array(
-		'Address' => array(		
+		'Address' => array(
 			'Uk',
 			'Usa'
 		),
@@ -57,7 +57,7 @@ class Data {
 		$class = '\\dummy_data\\models\\lib\\'.$class;
 		return $class::$method($options);
 	}
-	
+
 	/**
 	 * Returns array of all current generator classes
 	 * If a $recursive value of FALSE is used, only first
@@ -73,7 +73,7 @@ class Data {
 			$ret =& self::$generator_classes;
 		} else {
 			$ret = array_keys(self::$generator_classes);
-		}		
+		}
 		return $ret;
 	}
 
@@ -100,9 +100,9 @@ class Data {
 		}
 		return $ret;
 	}
-	
+
 	/**
-	 * Returns list of all Number related generators, 
+	 * Returns list of all Number related generators,
 	 * grouped by class. Only Number class exist at this time.
 	 *
 	 * @author Alexander Morland
@@ -113,9 +113,9 @@ class Data {
 			'Number' => self::listMethods('Number')
 		);
 	}
-	
+
 	/**
-	 * Returns list of all date and time related generators, 
+	 * Returns list of all date and time related generators,
 	 * grouped by class. Only Time class exist at this time.
 	 *
 	 * @author Alexander Morland
@@ -124,10 +124,10 @@ class Data {
 	public static function listTimeGenerators() {
 		return array('Time' => self::listMethods('Time') );
 	}
-	
+
 	/**
-	 * Returns list of all string related generators, 
-	 * grouped by class. 
+	 * Returns list of all string related generators,
+	 * grouped by class.
 	 *
 	 * @author Alexander Morland
 	 * @return array
@@ -156,18 +156,18 @@ class Data {
 	public static function listSubClasses($class) {
 		return self::$generator_classes[$class];
 	}
-	
+
 	/**
 	 * Returns a random element from a passed array
 	 *
-	 * @param array $array 
+	 * @param array $array
 	 * @return string
 	 * @author Caius Durling
-	 */	
+	 */
 	public static function random(&$array) {
 		return $array[mt_rand(0, count($array)-1)];
 	}
-	
+
 	/**
 	 * Returns a random number between 0 and 9
 	 *
@@ -177,7 +177,7 @@ class Data {
 	public static function rand_num() {
 		return mt_rand(0, 9);
 	}
-	
+
 	/**
 	 * Returns a random letter from a to z
 	 *
@@ -189,7 +189,7 @@ class Data {
 	}
 
 	public static function generate_random_num_str($str) {
-		// loop through each character and convert all unescaped X's to 1-9 and 
+		// loop through each character and convert all unescaped X's to 1-9 and
 		// unescaped x's to 0-9.
 		$new_str = "";
 		for ($i = 0; $i < strlen($str); $i++) {
@@ -208,16 +208,16 @@ class Data {
 			else
 				$new_str .= $str[$i];
 		}
-		
+
 		return trim($new_str);
 	}
-	
+
 	public static function generate_random_alphanumeric_str($str) {
 		$letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		$consonants = "BCDFGHJKLMNPQRSTVWXYZ";
 		$vowels = "AEIOU";
-		
-		// loop through each character and convert all unescaped X's to 1-9 and 
+
+		// loop through each character and convert all unescaped X's to 1-9 and
 		// unescaped x's to 0-9.
 		$new_str = "";
 		for ($i = 0; $i < strlen($str); $i++) {
@@ -229,7 +229,7 @@ class Data {
 				case "x":
 					$new_str .= rand(0, 9);
 				break;
-				
+
 				// Letters
 				case "L":
 					$new_str .= $letters[rand(0, strlen($letters) - 1)];
@@ -244,7 +244,7 @@ class Data {
 					else
 						$new_str .= strtolower($letters[rand(0, strlen($letters) - 1)]);
 				break;
-				
+
 				// Consonants
 				case "C":
 					$new_str .= $consonants[rand(0, strlen($consonants) - 1)];
@@ -259,7 +259,7 @@ class Data {
 					else
 						$new_str .= strtolower($consonants[rand(0, strlen($consonants) - 1)]);
 				break;
-				
+
 				// Vowels
 				case "V":
 					$new_str .= $vowels[rand(0, strlen($vowels) - 1)];
@@ -274,13 +274,13 @@ class Data {
 					else
 						$new_str .= strtolower($vowels[rand(0, strlen($vowels) - 1)]);
 				break;
-				
+
 				default:
 					$new_str .= $str[$i];
 				break;
 			}
 		}
-		
+
 		return trim($new_str);
-	}	
+	}
 }

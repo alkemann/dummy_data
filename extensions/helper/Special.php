@@ -13,7 +13,7 @@ class Special extends \lithium\template\Helper {
 		$ret .= "<label for='$id'>$label</label>";
 		return $ret;
 	}
-	
+
 	public function select($field, array $list = array(), array $options = array() ) {
 		$ret = '<select name="'.$field.'">';
 		foreach ($list as $group => $optionItems) {
@@ -29,4 +29,3 @@ class Special extends \lithium\template\Helper {
 	}
 
 }
-?>
