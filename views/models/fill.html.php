@@ -11,22 +11,20 @@ $modelArr = explode('\\',$modelName);
 #$plugin = reset($modelArr);
 $controller = end($modelArr);
 $controller = strtolower(\lithium\util\Inflector::pluralize($controller));
-foreach ($created->data() as $doc) {
-	echo '<li>'.$this->html->link($doc['_id'], array(
-#		'plugin' => $plugin,
-		'controller' => $controller,
-		'action' => 'view',
-		'args' => array($doc['_id'])
-	)).'</li>';
+foreach ($created as $doc) {
 	echo '<ul>';
-	foreach ($doc as $field => $value) :
+	foreach ($doc->data() as $field => $value) :
 		if ($field == 'id' || $field == '_id') continue;
 	?>
 		<li>
-			<dl><dt><?=$field?></dt><dd><?=$value?></dd></dl>
+			<dl><dt><?=$field?></dt>
+                            <dd><?=is_array($value)?json_encode($value):$value?>
+                            </dd></dl>
 		</li>
 <?php endforeach;
 	echo '</ul>';
+        echo '<div style="font-size:80%;">'.json_encode($doc->data()).'</div>';
+        echo '<hr>';
 }?>
 </ul>
 <?php } else {
@@ -57,9 +55,14 @@ foreach ($fields as $field => $generator) :
 ?>
 	<dt><?=$field?></dt>
 	<dd>
-		<?=$this->special->select($field, $generators, array('value' => $generator))?>
-		<span>example: <?=$examples[$field]?></span>
-		<hr>
+            <?php if (is_array($generator)) : ?>
+                <?=json_encode($generator)?>
+            <?php else : ?>
+                <?=$generator?>
+            <?php endif; ?>
+            <br><br>
+            <span>example: <span style="font-size:150%; color: firebrick"><?=$examples[$field]?></span></span>
+            <hr>
 	</dd>
 <?php endforeach; ?>
 </dl>

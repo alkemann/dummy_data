@@ -14,31 +14,38 @@ class Model extends \lithium\data\Model {
 		'source' => null
 	);
 
-	public static function create(array $data = array(), array $options = array()) {
-		if (empty($data)) return null;
-		if (sizeof($data) > 1) {
+	public static function create(array $fields = array(), array $options = array()) {
+		if (empty($fields)) return null;
+		if (sizeof($fields) > 1) {
 			$ret = array();
-			foreach ($data as $model) {
+			foreach ($fields as $model) {
 				$ret[] = static::create(array($model), $options);
 			}
 			return $ret;
 		}
-	 	$model = $data[0];
+	 	$model = $fields[0];
 		$model = substr($model,0,1) == '\\'?$model:'\\'.$model;
 		if (!class_exists($model)) return null;
 		$schema = $model::schema();
 		if (is_null($schema) || empty($schema) ) {
-			$data = static::inspect(null, $model::first()->data(), $model);
+			$fields = static::inspect(null, $model::first()->data(), $model);
 		} else {
-			$data = array();
+			$fields = array();
 			foreach ($schema as $field => $settings) {
-				$gen = Type::matchName($field);
-				if (!$gen) $gen = Type::matchType($settings);
-				$data[$field] = $gen;
+				$gen = null;
+                                if (isset($settings['generator']))
+                                    $gen = $settings['generator'];
+                                    if ($settings['generator'] === false) {
+                                        continue;
+                                    }
+                                if ($gen === null) $gen = Type::matchName($field);
+				if ($gen === null) $gen = Type::matchType($settings);
+				$fields[$field] = $gen;
 			}
 		}
-		$doc = new Document(array('data' => $data));
-		return $doc;
+		$entity = new $model();
+                $entity->generators = $fields;
+		return $entity;
 	}
 
 	private static function inspect($field, $value, $model) {
@@ -58,10 +65,15 @@ class Model extends \lithium\data\Model {
 		foreach ($fields as $field => $generator) {
 			if ($generator == null) {
 			 $ret[$field] = null;
-			} elseif (is_array($generator)) {
-				$ret[$field] = static::fill($generator);
+			//} elseif (is_array($generator)) {
+			//	$ret[$field] = static::fill($generator);
 			} else {
 				$options = array();
+                                if (is_array($generator)) {
+                                    $options = $generator;
+                                    $generator = $options['type'];
+                                    unset($options['type']);
+                                }
 				list($class, $method) = explode('->', $generator);
 				$ret[$field] = Data::generate($class, $method, $options);
 			}
@@ -73,8 +85,8 @@ class Model extends \lithium\data\Model {
 		$models = array();
 		switch ($type) {
 			case 'first' :
-				$name = $options['conditions']['_id'];
-				return null;
+				$name = $options['conditions']['model'];
+                                return $name::$schema;
 			break;
 			case 'all' :
 			default:
