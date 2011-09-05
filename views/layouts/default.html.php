@@ -15,8 +15,8 @@
 		<div id="header">
 			<h1>Dummy Data Generator</h1>
 			<ul>
-				<li><?=$this->html->link('List Models', '/dummy_data');?></li>
-				<li><?=$this->html->link('List Generators', '/dummy_data/generators');?></li>
+				<li><?=$this->html->link('List Models', '/dummy');?></li>
+				<li><?=$this->html->link('List Generators', '/dummy/generators');?></li>
 			</ul>
 			<hr>
 		</div>
@@ -24,6 +24,6 @@
 			<?php echo $this->content(); ?>
 		</div>
 	</div>
-<?php display_debugging(); ?>
+<?php if (function_exists('dout')) { dout(); } ?>
 </body>
 </html>

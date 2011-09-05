@@ -11,7 +11,7 @@ foreach ($fields as $field => $generator) :
 ?>
 	<dt><?=$field?></dt>
 	<dd>
-		<?=$generator?><br />
+		<?=is_array($generator)?json_encode($generator):$generator?><br />
 		<small>example:  <?=$example[$field]?></small>
 	</dd>
 <?php endforeach; ?>
