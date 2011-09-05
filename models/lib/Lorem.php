@@ -64,10 +64,10 @@ class Lorem {
 	 * @return array
 	 * @author Caius Durling
 	 */
-	private function sentences( $sentence_count = 3 ) {
+	private static function sentences( $sentence_count = 3 ) {
 		$c = $sentence_count + rand(0, 3);
 		for ($i=0; $i < $c; $i++) { 
-			$s[] = $this->sentence;
+			$s[] = static::sentence();
 		}
 		return $s;
 	}
@@ -79,8 +79,9 @@ class Lorem {
 	 * @return string
 	 * @author Caius Durling
 	 */
-	public static function paragraph( $options = array('max' => 6) ) {
-		return 'Lorem ipsum '.join( $this->sentences( rand(2, $options['max']) ), " " );
+	public static function paragraph( $options = array() ) {
+                $options = array('max' => 6) + $options;
+		return 'Lorem ipsum '.join( static::sentences( rand(2, $options['max']) ), " " );
 	}
 	
 	/**
@@ -90,9 +91,11 @@ class Lorem {
 	 * @return array
 	 * @author Caius Durling
 	 */
-	public static function paragraphs( $options = array('max' => 3)) {
+	public static function paragraphs(  $options = array() ) {
+                $options = array('max' => 3) + $options;
+                $p = '';
 		for ($i=0; $i < $options['max']; $i++) { 
-			$p[] = $this->paragraph;
+			$p .= static::paragraph($options) ."\n\n";
 		}
 		return $p;
 	}
